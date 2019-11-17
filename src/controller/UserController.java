@@ -13,11 +13,10 @@ public class UserController {
         // create user message
         UserMessage um = new UserMessage();
         
-        um.setName(name);
+        um.setLogin(name);
         um.setPassword(password);
         
         // send user message
-        // arrumar porta
         UserLogin ul = new UserLogin(Ports.AUTH);
         ul.run(um);
         

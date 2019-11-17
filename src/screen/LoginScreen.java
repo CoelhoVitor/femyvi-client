@@ -105,10 +105,10 @@ public class LoginScreen extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        String name = jTextField1.getText();
+        String login = jTextField1.getText();
         String password = Arrays.toString(jPasswordField1.getPassword());
         
-        UserController.SendUser(name, password);
+        UserController.SendUser(login, password);
         
         // aguardar o retorno e ai sim abrir o main screen
         
