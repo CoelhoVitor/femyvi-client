@@ -18,7 +18,7 @@ public class UserController {
         
         // send user message
         // arrumar porta
-        UserLogin ul = new UserLogin(Ports.UPLOAD);
+        UserLogin ul = new UserLogin(Ports.AUTH);
         ul.run(um);
         
     }

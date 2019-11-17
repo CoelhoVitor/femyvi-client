@@ -7,6 +7,7 @@ public enum Ports {
     DOWNLOAD(3001),
     REMOVE(3002),
     UPLOAD(3003),
+    AUTH(3004),
     ;
     
     private final int value;
