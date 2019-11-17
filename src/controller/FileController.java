@@ -1,5 +1,7 @@
 package controller;
 
+import connection.FileUpload;
+import connection.Ports;
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -9,30 +11,12 @@ import java.nio.file.Path;
 import model.FileMessage;
 import utils.FileUtils;
 
-/**
- *
- * @author coelhovitor
- */
 public class FileController {
 
     public FileController() {
     }
 
     public static void SendFile(File file) throws IOException {
-        
-        // create socket
-        Socket socket = new Socket("localhost", 7777);
-        System.out.println("Conectado!");
-        
-        OutputStream outputStream = socket.getOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-        
-        System.out.println("Sending messages to the ServerSocket");
-        objectOutputStream.writeObject(fileMessage);
-        
-        System.out.println("Fechando socket and terminando o programa.");
-        socket.close();
-        
         // create file message
         FileMessage fm = new FileMessage();
 
@@ -46,8 +30,9 @@ public class FileController {
         fm.setContent(FileUtils.getContent(path));
         fm.setFileSize(fm.getContent().length);
         
-        // send file        
-
+        // send file
+        FileUpload fup = new FileUpload(Ports.UPLOAD);
+        fup.run(fm);
     }
 
 }
