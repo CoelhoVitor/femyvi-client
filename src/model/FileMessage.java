@@ -1,12 +1,9 @@
+
 package model;
 
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author coelhovitor
- */
 public class FileMessage implements Serializable {
     
     private String filename;
@@ -67,6 +64,11 @@ public class FileMessage implements Serializable {
 
     public void setContent(byte[] content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "FileMessage{" + "filename=" + filename + ", fileType=" + fileType + ", originPath=" + originPath + ", createdDate=" + createdDate + ", fileSize=" + fileSize + ", content=" + content + '}';
     }    
     
 }
