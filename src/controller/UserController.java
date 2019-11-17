@@ -9,11 +9,11 @@ public class UserController {
     public UserController() {
     }
     
-    public static void SendUser(String name, String password) {
+    public static void SendUser(String login, String password) {
         // create user message
         UserMessage um = new UserMessage();
         
-        um.setLogin(name);
+        um.setLogin(login);
         um.setPassword(password);
         
         // send user message
