@@ -9,7 +9,7 @@ import java.util.Date;
  */
 public class FileMessage implements Serializable {
     
-    private String fileName;
+    private String filename;
     
     private String fileType;
     
@@ -21,12 +21,12 @@ public class FileMessage implements Serializable {
     
     private byte[] content;
 
-    public String getFileName() {
-        return fileName;
+    public String getFilename() {
+        return filename;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getFileType() {
