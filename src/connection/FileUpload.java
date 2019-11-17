@@ -1,12 +1,7 @@
 
 package connection;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +9,7 @@ import model.FileMessage;
 
 public class FileUpload {
     
-    private int port;
+    private final int port;
     
     private final FileMessageSocket fileMessageSocket = new FileMessageSocket();
 
