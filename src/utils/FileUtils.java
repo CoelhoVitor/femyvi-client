@@ -6,18 +6,14 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
 
-/**
- *
- * @author coelhovitor
- */
 public class FileUtils {
 
-    public static String getExtension(String fileName) {
+    public static String getExtension(String filename) {
 
         String extension = "";
-        int i = fileName.lastIndexOf('.');
+        int i = filename.lastIndexOf('.');
         if (i >= 0) {
-            extension = fileName.substring(i + 1);
+            extension = filename.substring(i + 1);
         }
 
         return extension;
@@ -37,6 +33,10 @@ public class FileUtils {
         attr = Files.readAttributes(path, BasicFileAttributes.class);
         
         return new Date(attr.creationTime().toMillis());
+    }
+    
+    public static String getFilenameWithoutExtension(String filename) {        
+        return filename.replaceFirst("[.][^.]+$", "");
     }
 
 }

@@ -20,7 +20,7 @@ public class FileController {
         String filename = file.getName();
         Path path = file.toPath();
 
-        fm.setFilename(filename);
+        fm.setFilename(FileUtils.getFilenameWithoutExtension(filename));
         fm.setFileType(FileUtils.getExtension(filename));
         fm.setOriginPath(file.getAbsolutePath());
         fm.setCreatedDate(FileUtils.getCreationDate(path));
