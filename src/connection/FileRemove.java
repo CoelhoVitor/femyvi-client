@@ -12,6 +12,8 @@ import model.FileMessage;
 public class FileRemove {
     
     private int port;
+    
+    private final FileMessageSocket fileMessageSocket = new FileMessageSocket();
 
     public FileRemove(Ports port) {
         this.port = port.getValue();
@@ -20,9 +22,7 @@ public class FileRemove {
     public void run(FileMessage fm) {
         try {
             Socket socket = new Socket("localhost", port);
-            OutputStream outputStream = socket.getOutputStream();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-            objectOutputStream.writeObject(fm);
+            fileMessageSocket.sendFileMessage(socket, fm);
             socket.close();
         } catch (IOException ex) {
             Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);

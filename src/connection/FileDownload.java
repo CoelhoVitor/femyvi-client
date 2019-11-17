@@ -11,6 +11,8 @@ import model.FileMessage;
 public class FileDownload {
     
     private int port;
+    
+    private final FileMessageSocket fileMessageSocket = new FileMessageSocket();
 
     public FileDownload(Ports port) {
         this.port = port.getValue();
@@ -18,11 +20,8 @@ public class FileDownload {
     
     public FileMessage run() {
         try {
-            Socket socket = new Socket("localhost", port);
-            InputStream inputStream = socket.getInputStream();
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-            
-            FileMessage fm = (FileMessage) objectInputStream.readObject();
+            Socket socket = new Socket("localhost", port);            
+            FileMessage fm = fileMessageSocket.receiveFileMessage(socket);
             System.out.println(fm.toString());
             socket.close();
             return fm;
