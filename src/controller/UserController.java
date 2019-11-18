@@ -8,18 +8,19 @@ public class UserController {
 
     public UserController() {
     }
-    
-    public static void SendUser(String login, String password) {
+
+    public static boolean SendUser(String login, String password) {
         // create user message
         UserMessage um = new UserMessage();
-        
+
         um.setLogin(login);
         um.setPassword(password);
-        
+
         // send user message
         UserLogin ul = new UserLogin(Ports.AUTH);
-        ul.run(um);
+        boolean isValidUser = ul.run(um);
         
+        return isValidUser;
     }
-    
+
 }
