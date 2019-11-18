@@ -106,14 +106,18 @@ public class LoginScreen extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         String login = jTextField1.getText();
-        String password = Arrays.toString(jPasswordField1.getPassword());
-        
-        UserController.SendUser(login, password);
-        
+        String password = jPasswordField1.getText();
+        boolean isValidUser = UserController.SendUser(login, password);
+
         // aguardar o retorno e ai sim abrir o main screen
-        
-        new MainScreen();
-        LoginScreen.this.setVisible(false);
+        if (isValidUser) {
+            new MainScreen();
+            LoginScreen.this.setVisible(false);
+        } else {
+            // Adicionar uma mensagem de erro na tela
+            System.out.println("Usuario invalido");
+        }
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
