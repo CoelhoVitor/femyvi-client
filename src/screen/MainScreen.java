@@ -5,13 +5,18 @@
  */
 package screen;
 
+import connection.FileFetch;
+import connection.Ports;
 import controller.FileController;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import model.FileMessage;
+import model.UserMessage;
 import utils.SessionUser;
 
 /**
@@ -26,7 +31,11 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         initComponents();
         MainScreen.this.setVisible(true);
-        System.out.println("Usuario logado: " + SessionUser.getInstance().toString());
+        UserMessage um = SessionUser.getInstance();
+        System.out.println("Usuario logado: " + um.toString());
+        
+        ArrayList<FileMessage> fms = FileController.ReceiveFiles(um);
+        System.out.println(fms.toString());
     }
 
     /**
@@ -137,7 +146,7 @@ public class MainScreen extends javax.swing.JFrame {
         
         if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             
-            File file = fc.getSelectedFile();        
+            File file = fc.getSelectedFile();            
             
             try {
                 FileController.SendFile(file);
@@ -148,14 +157,14 @@ public class MainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
-        if(jTextField1.getText().equals("Digite o nome do arquivo")){
+        if (jTextField1.getText().equals("Digite o nome do arquivo")) {
             jTextField1.setText("");
             jTextField1.setForeground(Color.BLACK);
         }
     }//GEN-LAST:event_jTextField1FocusGained
 
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
-        if(jTextField1.getText().equals("")){
+        if (jTextField1.getText().equals("")) {
             jTextField1.setText("Digite o nome do arquivo");
             jTextField1.setForeground(Color.GRAY);
         }

@@ -20,7 +20,7 @@ public class FileFetch {
         this.port = port.getValue();
     }
 
-    public void run(UserMessage um) {
+    public ArrayList<FileMessage> run(UserMessage um) {
         try {
             while (true) {
                 // send user to SG
@@ -32,14 +32,17 @@ public class FileFetch {
 
                 // get file messages from SG
                 Socket socketToSG = new Socket("localhost", Ports.FETCH.getValue());
-                ArrayList<FileMessage> fileMessages = fileMessageSocket.receiveFileMessageList(socket);
+                ArrayList<FileMessage> fileMessages = fileMessageSocket.receiveFileMessageList(socketToSG);
                 socketToSG.close();
+
+                return fileMessages;
             }
         } catch (IOException ex) {
             Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return new ArrayList<FileMessage>();
     }
 
 }

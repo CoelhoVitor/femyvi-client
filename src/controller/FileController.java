@@ -1,11 +1,14 @@
 package controller;
 
+import connection.FileFetch;
 import connection.FileUpload;
 import connection.Ports;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import model.FileMessage;
+import model.UserMessage;
 import utils.FileUtils;
 
 public class FileController {
@@ -26,10 +29,17 @@ public class FileController {
         fm.setCreatedDate(FileUtils.getCreationDate(path));
         fm.setContent(FileUtils.getContent(path));
         fm.setFileSize(fm.getContent().length);
-        
+
         // send file
         FileUpload fup = new FileUpload(Ports.UPLOAD);
         fup.run(fm);
+    }
+
+    public static ArrayList<FileMessage> ReceiveFiles(UserMessage um) {
+        FileFetch ff = new FileFetch(Ports.FETCH);
+        ArrayList<FileMessage> fms = ff.run(um);
+
+        return fms;
     }
 
 }
