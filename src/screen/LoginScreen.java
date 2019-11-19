@@ -1,6 +1,7 @@
 package screen;
 
 import controller.UserController;
+import utils.SessionUser;
 
 public class LoginScreen extends javax.swing.JFrame {
 
@@ -110,6 +111,7 @@ public class LoginScreen extends javax.swing.JFrame {
         
         // aguardar o retorno e ai sim abrir o main screen
         if (isValidUser) {
+            SessionUser.setInstance(login, password);
             new MainScreen();
             LoginScreen.this.setVisible(false);
         } else {
