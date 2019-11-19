@@ -38,11 +38,6 @@ public class LoginScreen extends javax.swing.JFrame {
         jLabel1.setText("Femyvi");
 
         jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Login:");
 
@@ -107,16 +102,12 @@ public class LoginScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         String login = jTextField1.getText();
         String password = jPasswordField1.getText();
         boolean isValidUser = UserController.SendUser(login, password);
-
+        
         // aguardar o retorno e ai sim abrir o main screen
         if (isValidUser) {
             new MainScreen();
