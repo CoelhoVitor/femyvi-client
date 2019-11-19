@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import utils.SessionUser;
 
 /**
  *
@@ -25,6 +26,7 @@ public class MainScreen extends javax.swing.JFrame {
     public MainScreen() {
         initComponents();
         MainScreen.this.setVisible(true);
+        System.out.println("Usuario logado: " + SessionUser.getInstance().toString());
     }
 
     /**
