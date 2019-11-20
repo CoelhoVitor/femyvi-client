@@ -1,12 +1,30 @@
 package utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
+import model.FileMessage;
 
 public class FileUtils {
+    
+    public static FileMessage fileToFileMessage(File f) throws IOException {
+        FileMessage fm = new FileMessage();
+
+        String filename = f.getName();
+        Path path = f.toPath();
+
+        fm.setFilename(FileUtils.getFilenameWithoutExtension(filename));
+        fm.setFileType(FileUtils.getExtension(filename));
+        fm.setOriginPath(f.getAbsolutePath());
+        fm.setCreatedDate(FileUtils.getCreationDate(path));
+        fm.setContent(FileUtils.getContent(path));
+        fm.setFileSize(fm.getContent().length);
+
+        return fm;
+    }
 
     public static String getExtension(String filename) {
 
