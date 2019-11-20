@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import model.FileMessage;
 import model.UserMessage;
 import utils.FileUtils;
+import utils.SessionUser;
 
 public class FileController {
 
@@ -22,6 +23,7 @@ public class FileController {
 
         String filename = file.getName();
         Path path = file.toPath();
+        UserMessage sessionUser = SessionUser.getInstance();
 
         fm.setFilename(FileUtils.getFilenameWithoutExtension(filename));
         fm.setFileType(FileUtils.getExtension(filename));
@@ -29,6 +31,7 @@ public class FileController {
         fm.setCreatedDate(FileUtils.getCreationDate(path));
         fm.setContent(FileUtils.getContent(path));
         fm.setFileSize(fm.getContent().length);
+        fm.setOwner(sessionUser.getLogin());
 
         // send file
         FileUpload fup = new FileUpload(Ports.UPLOAD);

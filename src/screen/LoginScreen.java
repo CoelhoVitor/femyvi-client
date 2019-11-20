@@ -1,6 +1,8 @@
 package screen;
 
 import controller.UserController;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import utils.SessionUser;
 
 public class LoginScreen extends javax.swing.JFrame {
@@ -11,7 +13,13 @@ public class LoginScreen extends javax.swing.JFrame {
     public LoginScreen() {
         initComponents();
         LoginScreen.this.setVisible(true);
+        centralizeScreen();
         jLabel2.setVisible(false);
+    }
+
+    private void centralizeScreen() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
 
     /**
@@ -108,7 +116,7 @@ public class LoginScreen extends javax.swing.JFrame {
         String login = jTextField1.getText();
         String password = jPasswordField1.getText();
         boolean isValidUser = UserController.SendUser(login, password);
-        
+
         // aguardar o retorno e ai sim abrir o main screen
         if (isValidUser) {
             SessionUser.setInstance(login, password);
