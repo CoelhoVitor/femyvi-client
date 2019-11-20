@@ -20,6 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import model.FileMessage;
 import model.UserMessage;
@@ -49,9 +51,43 @@ public class Main extends javax.swing.JFrame {
         System.out.println(fileMessageList.toString());
 
         configureTable();
+        configureFileFilter();
 
         reloadFileList();
+    }
 
+    private void filterTable(String inputValue) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        model.setRowCount(0); // clear table
+
+        for (FileMessage fm : fileMessageList) {
+            String filename = fm.getFilename();
+            if (filename.toUpperCase().contains(inputValue.toUpperCase()) || inputValue.equals("") || inputValue.equals("Digite o nome do arquivo")) {
+                Object[] row = {filename, null, null, null};
+                model.addRow(row);
+            }
+        }
+    }
+
+    private void configureFileFilter() {
+        jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterTable(jTextField1.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterTable(jTextField1.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterTable(jTextField1.getText());
+            }
+
+        });
     }
 
     private void centralizeScreen() {
@@ -197,6 +233,18 @@ public class Main extends javax.swing.JFrame {
                 jTextField1FocusLost(evt);
             }
         });
+        jTextField1.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                jTextField1InputMethodTextChanged(evt);
+            }
+        });
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -315,6 +363,15 @@ public class Main extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTextField1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextField1InputMethodTextChanged
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jTextField1InputMethodTextChanged
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
