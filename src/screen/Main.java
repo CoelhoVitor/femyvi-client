@@ -5,11 +5,8 @@
  */
 package screen;
 
-import connection.FileFetch;
-import connection.Ports;
 import controller.FileController;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
@@ -19,12 +16,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.FileMessage;
 import model.UserMessage;
@@ -32,43 +25,43 @@ import utils.FileUtils;
 import utils.SessionUser;
 import utils.ImageRenderer;
 
-public class MainScreen extends javax.swing.JFrame {
-    
-    private ArrayList<FileMessage> fileMessageList;
+public class Main extends javax.swing.JFrame {
+
+    private final ArrayList<FileMessage> fileMessageList;
 
     /**
      * Creates new form TelaPrincipal
      */
-    public MainScreen() {
+    public Main() {
         initComponents();
-        MainScreen.this.setVisible(true);
+        Main.this.setVisible(true);
         centralizeScreen();
-        
+
         UserMessage um = SessionUser.getInstance();
         System.out.println("Usuario logado: " + um.toString());
-        
+
         setButtonIcons();
         setColumnIcons();
-        
+
         fileMessageList = FileController.ReceiveFiles(um);
         System.out.println(fileMessageList.toString());
-        
+
         configureTable();
-        
+
         reloadFileList();
-        
+
     }
-    
+
     private void centralizeScreen() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
     }
-    
+
     private void configureTable() {
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(350);
         jTable1.getTableHeader().setResizingAllowed(false);
         jTable1.getTableHeader().setReorderingAllowed(false);
-        
+
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -78,6 +71,7 @@ public class MainScreen extends javax.swing.JFrame {
                 switch (col) {
                     case 1: // info
                         System.out.println("Info");
+                        onFileInfoClick(selectedFile);
                         break;
                     case 2: // download
                         System.out.println("Download");
@@ -85,20 +79,24 @@ public class MainScreen extends javax.swing.JFrame {
                             try {
                                 onDownloadClick(selectedFile);
                             } catch (IOException ex) {
-                                Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                        
+
                         break;
                     case 3: // delete
                         System.out.println("Delete");
                         break;
                 }
-                
+
             }
         });
     }
     
+    private void onFileInfoClick(FileMessage selectedFile) {
+        new FileProperties(selectedFile);
+    }
+
     private void onDownloadClick(FileMessage selectedFile) throws IOException {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File("."));
@@ -106,7 +104,7 @@ public class MainScreen extends javax.swing.JFrame {
         fc.setApproveButtonText("Enviar");
         fc.setAcceptAllFileFilterUsed(false);
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        
+
         if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File folder = fc.getSelectedFile();
             File file = new File(folder.getAbsolutePath() + "/"
@@ -117,29 +115,30 @@ public class MainScreen extends javax.swing.JFrame {
             Files.write(Paths.get(filePath), selectedFile.getContent());
         }
     }
+
     private void reloadFileList() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
         model.setRowCount(0); // clear table
-        
+
         for (FileMessage fm : fileMessageList) {
             Object[] row = {fm.getFilename(), null, null, null};
             model.addRow(row);
         }
     }
-    
+
     private void setButtonIcons() {
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add-16.png")));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/information.png")));
     }
-    
+
     private void setColumnIcons() {
         ImageIcon infoIcon = new javax.swing.ImageIcon(getClass().getResource("/images/information.png"));
         jTable1.getColumnModel().getColumn(1).setCellRenderer(new ImageRenderer(infoIcon));
-        
+
         ImageIcon downloadIcon = new javax.swing.ImageIcon(getClass().getResource("/images/download.png"));
         jTable1.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer(downloadIcon));
-        
+
         ImageIcon removeIcon = new javax.swing.ImageIcon(getClass().getResource("/images/clear-button.png"));
         jTable1.getColumnModel().getColumn(3).setCellRenderer(new ImageRenderer(removeIcon));
     }
@@ -262,18 +261,18 @@ public class MainScreen extends javax.swing.JFrame {
         JFileChooser fc = new JFileChooser(new File("./"));
         fc.setVisible(true);
         fc.setApproveButtonText("Inserir");
-        
+
         if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            
+
             File file = fc.getSelectedFile();
-            
+
             try {
                 FileController.SendFile(file);
                 FileMessage newFileMessage = FileUtils.fileToFileMessage(file);
                 this.fileMessageList.add(newFileMessage);
                 reloadFileList();
             } catch (IOException ex) {
-                Logger.getLogger(MainScreen.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed

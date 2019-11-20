@@ -5,14 +5,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import utils.SessionUser;
 
-public class LoginScreen extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginScreen
      */
-    public LoginScreen() {
+    public Login() {
         initComponents();
-        LoginScreen.this.setVisible(true);
+        Login.this.setVisible(true);
         centralizeScreen();
         jLabel2.setVisible(false);
     }
@@ -120,8 +120,8 @@ public class LoginScreen extends javax.swing.JFrame {
         // aguardar o retorno e ai sim abrir o main screen
         if (isValidUser) {
             SessionUser.setInstance(login, password);
-            new MainScreen();
-            LoginScreen.this.setVisible(false);
+            new Main();
+            Login.this.setVisible(false);
         } else {
             jTextField1.setText("");
             jPasswordField1.setText("");
