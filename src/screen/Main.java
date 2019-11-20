@@ -5,6 +5,8 @@
  */
 package screen;
 
+import connection.FileRemove;
+import connection.Ports;
 import controller.FileController;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -86,15 +88,29 @@ public class Main extends javax.swing.JFrame {
                         break;
                     case 3: // delete
                         System.out.println("Delete");
+                         {
+                            try {
+                                onRemoveClick(selectedFile, row);
+                                reloadFileList();
+                            } catch (IOException ex) {
+                                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                         break;
                 }
 
             }
         });
     }
-    
+
     private void onFileInfoClick(FileMessage selectedFile) {
         new FileProperties(selectedFile);
+    }
+
+    private void onRemoveClick(FileMessage selectedFile, int row) throws IOException {
+        FileRemove fr = new FileRemove(Ports.REMOVE);
+        fr.run(selectedFile);
+        fileMessageList.remove(row);
     }
 
     private void onDownloadClick(FileMessage selectedFile) throws IOException {
@@ -269,6 +285,7 @@ public class Main extends javax.swing.JFrame {
             try {
                 FileController.SendFile(file);
                 FileMessage newFileMessage = FileUtils.fileToFileMessage(file);
+                newFileMessage.setOwner(SessionUser.getInstance().getLogin());
                 this.fileMessageList.add(newFileMessage);
                 reloadFileList();
             } catch (IOException ex) {

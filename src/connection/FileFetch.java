@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.FileMessage;
 import model.UserMessage;
+import utils.FileUtils;
 
 public class FileFetch {
 
@@ -33,6 +34,11 @@ public class FileFetch {
                 // get file messages from SG
                 Socket socketToSG = new Socket("localhost", Ports.FETCH.getValue());
                 ArrayList<FileMessage> fileMessages = fileMessageSocket.receiveFileMessageList(socketToSG);
+                for (FileMessage fm : fileMessages) {
+                    String filename = fm.getFilename();
+                    fm.setFilename(FileUtils.getFilenameWithoutServerNum(filename));
+                    fm.setOwner(um.getLogin());
+                }
                 socketToSG.close();
 
                 return fileMessages;

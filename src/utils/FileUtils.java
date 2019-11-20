@@ -56,5 +56,9 @@ public class FileUtils {
     public static String getFilenameWithoutExtension(String filename) {        
         return filename.replaceFirst("[.][^.]+$", "");
     }
+    
+    public static String getFilenameWithoutServerNum(String filename) {        
+        return filename.replaceFirst("[_][1]+$", "");
+    }
 
 }
