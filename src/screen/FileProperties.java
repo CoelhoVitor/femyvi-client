@@ -35,7 +35,7 @@ public class FileProperties extends javax.swing.JFrame {
     }
     
     private String formatDate(Date date) {
-        SimpleDateFormat sdt = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdt = new SimpleDateFormat("dd/MM/yyyy");
         return sdt.format(date);
     }
 
