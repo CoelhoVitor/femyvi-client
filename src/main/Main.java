@@ -4,7 +4,7 @@ package main;
 import connection.HealthChecker;
 import connection.Ports;
 import java.io.IOException;
-import screen.LoginScreen;
+import screen.Login;
 
 public class Main {
     
@@ -17,7 +17,7 @@ public class Main {
         hc1.start();
         hc2.start();
         
-        new LoginScreen();
+        new Login();
                 
     }
     
