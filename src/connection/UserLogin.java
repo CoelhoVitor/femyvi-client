@@ -6,6 +6,8 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import model.UserMessage;
 
 public class UserLogin {
@@ -20,7 +22,11 @@ public class UserLogin {
 
     public boolean run(UserMessage um) {
         try {
-            Socket socket = new Socket("localhost", port);
+            System.setProperty("javax.net.ssl.trustStore", "clientkeystore.ks");
+
+            SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+            SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket("localhost", port);
+
             userMessageSocket.sendUserMessage(socket, um);
             // get from SG if user is valid
             InputStream inputStream = socket.getInputStream();

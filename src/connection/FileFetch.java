@@ -1,10 +1,11 @@
 package connection;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import model.FileMessage;
 import model.UserMessage;
 import utils.FileUtils;
@@ -24,15 +25,26 @@ public class FileFetch {
     public ArrayList<FileMessage> run(UserMessage um) {
         try {
             while (true) {
+                System.setProperty("javax.net.ssl.trustStore", "clientkeystore.ks");
+
+                SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+                SSLSocket socket = (SSLSocket) sslsocketfactory.createSocket("localhost", port);
+
+                socket.startHandshake();
+                
                 // send user to SG
-                Socket socket = new Socket("localhost", port);
                 userMessageSocket.sendUserMessage(socket, um);
                 System.out.println(um.toString());
 
                 socket.close();
 
                 // get file messages from SG
-                Socket socketToSG = new Socket("localhost", Ports.FETCH.getValue());
+                System.setProperty("javax.net.ssl.trustStore", "clientkeystore.ks");
+
+                SSLSocket socketToSG = (SSLSocket) sslsocketfactory.createSocket("localhost", Ports.FETCH.getValue());
+
+                socketToSG.startHandshake();
+                
                 ArrayList<FileMessage> fileMessages = fileMessageSocket.receiveFileMessageList(socketToSG);
                 for (FileMessage fm : fileMessages) {
                     String filename = fm.getFilename();
