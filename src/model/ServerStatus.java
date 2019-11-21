@@ -3,6 +3,7 @@ package model;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import utils.SessionServer;
 
 public class ServerStatus {
     
@@ -31,6 +32,7 @@ public class ServerStatus {
             this.labelServer.setText("Offline");
             this.labelServer.setForeground(Color.RED);
         }
+        SessionServer.updateComponents();
     }
 
     public JLabel getLabelServer() {

@@ -22,29 +22,29 @@ public class HealthChecker extends Thread {
 
     @Override
     public void run() {
-            while (true) {
-                try {
-                    System.setProperty("javax.net.ssl.trustStore", "clientkeystore.ks");
-                    
-                    SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-                    SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket("localhost", port);
-                    
-                    socket.startHandshake();
-                    
-                    InputStream inputStream = socket.getInputStream();
-                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-                    
-                    String msg = (String) objectInputStream.readObject();
-                    
-                    boolean isServerUp = msg.equals(UP_MESSAGE);
-                    updateServerStatus(isServerUp);
-                    
-                    Thread.sleep(2000);
-                } catch (IOException | ClassNotFoundException | InterruptedException ex) {
-                    updateServerStatus(false);
-                }
+        while (true) {
+            try {
+                System.setProperty("javax.net.ssl.trustStore", "clientkeystore.ks");
+
+                SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+                SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket("localhost", port);
+
+                socket.startHandshake();
+
+                InputStream inputStream = socket.getInputStream();
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+
+                String msg = (String) objectInputStream.readObject();
+
+                boolean isServerUp = msg.equals(UP_MESSAGE);
+                updateServerStatus(isServerUp);
+
+                Thread.sleep(1000);
+            } catch (IOException | ClassNotFoundException | InterruptedException ex) {
+                updateServerStatus(false);
             }
-        
+        }
+
     }
 
     private void updateServerStatus(boolean isServerUp) {
@@ -54,6 +54,8 @@ public class HealthChecker extends Thread {
             session.getServer1().setOnline(isServerUp);
         } else if (port == Ports.HEALTHCHECK_2.getValue()) {
             session.getServer2().setOnline(isServerUp);
+        } else if (port == Ports.HEALTHCHECK_SG.getValue()) {
+            session.getServerSg().setOnline(isServerUp);
         }
     }
 
