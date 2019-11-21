@@ -11,7 +11,7 @@ public class Main {
     
     public static void main(String[] args) throws IOException {
         
-        SessionServer.setInstance(false, false);
+        SessionServer.setInstance();
         
         HealthChecker hc1 = new HealthChecker(Ports.HEALTHCHECK_1);
         HealthChecker hc2 = new HealthChecker(Ports.HEALTHCHECK_2);

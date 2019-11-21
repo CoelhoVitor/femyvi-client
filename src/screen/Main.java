@@ -25,7 +25,6 @@ import model.UserMessage;
 import utils.FileUtils;
 import utils.SessionUser;
 import utils.ImageRenderer;
-import utils.SessionServer;
 
 public class Main extends javax.swing.JFrame {
 
@@ -37,22 +36,13 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         Main.this.setVisible(true);
+        
         centralizeScreen();
 
         UserMessage um = SessionUser.getInstance();
         System.out.println("Usuario logado: " + um.toString());
         
-        ServerStatus ss = SessionServer.getInstance();
-        if (ss.isServer1()) { 
-            server1Label.setText("Online"); 
-        } else {
-            server1Label.setText("Offline"); 
-        }
-        if (ss.isServer2()) { 
-            server2Label.setText("Online"); 
-        } else {
-            server2Label.setText("Offline"); 
-        }
+        ServerStatus.handleLabel(server1Label, server2Label);
         
         setButtonIcons();
         setColumnIcons();

@@ -1,23 +1,19 @@
 package utils;
 
-import model.ServerStatus;
-
 public class SessionServer {
 
-    private static ServerStatus instance = null;
+    private static SessionServer instance = null;
 
     public SessionServer() {
     }
 
-    public static void setInstance(boolean server1, boolean server2) {
-        instance = new ServerStatus();
-        instance.setServer1(server1);
-        instance.setServer2(server2);
+    public static void setInstance() {
+        instance = new SessionServer();
     }
 
-    public static ServerStatus getInstance() {
+    public static SessionServer getInstance() {
         if (instance == null) {
-            instance = new ServerStatus();
+            instance = new SessionServer();
         }
         return instance;
     }

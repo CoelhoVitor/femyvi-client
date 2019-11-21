@@ -21,29 +21,30 @@ public class HealthChecker extends Thread {
 
     @Override
     public void run() {
-        try {
             while (true) {
-                System.setProperty("javax.net.ssl.trustStore", "clientkeystore.ks");
-
-                SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-                SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket("localhost", port);
-
-                socket.startHandshake();
-
-                InputStream inputStream = socket.getInputStream();
-                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-
-                String msg = (String) objectInputStream.readObject();
-
-                boolean isServerUp = msg.equals(UP_MESSAGE);
-                System.out.println(isServerUp);
-
-                updateServerStatus(isServerUp);
-                Thread.sleep(2000);
+                try {
+                    System.setProperty("javax.net.ssl.trustStore", "clientkeystore.ks");
+                    
+                    SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+                    SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket("localhost", port);
+                    
+                    socket.startHandshake();
+                    
+                    InputStream inputStream = socket.getInputStream();
+                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                    
+                    String msg = (String) objectInputStream.readObject();
+                    
+                    boolean isServerUp = msg.equals(UP_MESSAGE);
+                    System.out.println(isServerUp);
+                    
+                    updateServerStatus(isServerUp);
+                    Thread.sleep(2000);
+                } catch (IOException | ClassNotFoundException | InterruptedException ex) {
+                    Logger.getLogger(HealthChecker.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-        } catch (IOException | InterruptedException | ClassNotFoundException ex) {
-            Logger.getLogger(HealthChecker.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     private void updateServerStatus(boolean isServerUp) {
