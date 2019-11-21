@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package screen;
 
 import connection.FileRemove;
@@ -24,26 +20,32 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import model.FileMessage;
+import model.ServerStatus;
 import model.UserMessage;
 import utils.FileUtils;
 import utils.SessionUser;
 import utils.ImageRenderer;
+import utils.SessionServer;
 
 public class Main extends javax.swing.JFrame {
 
     private final ArrayList<FileMessage> fileMessageList;
 
     /**
-     * Creates new form TelaPrincipal
+     * Creates new form Main
      */
     public Main() {
         initComponents();
         Main.this.setVisible(true);
+        
         centralizeScreen();
 
         UserMessage um = SessionUser.getInstance();
         System.out.println("Usuario logado: " + um.toString());
-
+        
+        SessionServer.getInstance().getServer1().setLabelServer(server1Label);
+        SessionServer.getInstance().getServer2().setLabelServer(server2Label);
+        
         setButtonIcons();
         setColumnIcons();
 
@@ -210,6 +212,10 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         infoButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        server1Label = new javax.swing.JLabel();
+        server2Label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -270,11 +276,6 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jTable1.setRowHeight(22);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
 
         infoButton.addActionListener(new java.awt.event.ActionListener() {
@@ -282,6 +283,16 @@ public class Main extends javax.swing.JFrame {
                 infoButtonActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Servidor 1:");
+
+        jLabel3.setText("Servidor 2:");
+
+        server1Label.setForeground(java.awt.Color.green);
+        server1Label.setText("Online");
+
+        server2Label.setForeground(java.awt.Color.green);
+        server2Label.setText("Online");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -300,13 +311,32 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(278, 278, 278))
+                .addGap(147, 147, 147)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(server1Label))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(server2Label)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(server1Label))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(server2Label))))
                 .addGap(21, 21, 21)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -360,10 +390,6 @@ public class Main extends javax.swing.JFrame {
         new RepoProperties(fileMessageList);
     }//GEN-LAST:event_infoButtonActionPerformed
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable1MouseClicked
-
     private void jTextField1InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextField1InputMethodTextChanged
         // TODO add your handling code here:
 
@@ -377,8 +403,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton addButton;
     private javax.swing.JButton infoButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel server1Label;
+    private javax.swing.JLabel server2Label;
     // End of variables declaration//GEN-END:variables
 }

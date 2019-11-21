@@ -9,7 +9,7 @@ import model.FileMessage;
 
 public class FileRemove {
 
-    private int port;
+    private final int port;
 
     private final FileMessageSocket fileMessageSocket = new FileMessageSocket();
 
