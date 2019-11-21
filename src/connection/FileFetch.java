@@ -23,15 +23,16 @@ public class FileFetch {
     }
 
     public ArrayList<FileMessage> run(UserMessage um) {
-        try {
-            while (true) {
+
+        while (true) {
+            try {
                 System.setProperty("javax.net.ssl.trustStore", "clientkeystore.ks");
 
                 SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
                 SSLSocket socket = (SSLSocket) sslsocketfactory.createSocket("localhost", port);
 
                 socket.startHandshake();
-                
+
                 // send user to SG
                 userMessageSocket.sendUserMessage(socket, um);
                 System.out.println(um.toString());
@@ -44,7 +45,7 @@ public class FileFetch {
                 SSLSocket socketToSG = (SSLSocket) sslsocketfactory.createSocket("localhost", Ports.FETCH.getValue());
 
                 socketToSG.startHandshake();
-                
+
                 ArrayList<FileMessage> fileMessages = fileMessageSocket.receiveFileMessageList(socketToSG);
                 for (FileMessage fm : fileMessages) {
                     String filename = fm.getFilename();
@@ -54,11 +55,10 @@ public class FileFetch {
                 socketToSG.close();
 
                 return fileMessages;
+            } catch (IOException | ClassNotFoundException ex) {
+                Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException | ClassNotFoundException ex) {
-            Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return new ArrayList<FileMessage>();
     }
 
 }

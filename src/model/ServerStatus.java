@@ -1,45 +1,44 @@
 
 package model;
 
+import java.awt.Color;
 import javax.swing.JLabel;
 
 public class ServerStatus {
     
-    private static boolean server1;
+    private boolean online;
     
-    private static boolean server2;
+    private JLabel labelServer;
 
     public ServerStatus() {
     }
-    
-    public static void handleLabel(JLabel s1, JLabel s2) {
-        if (server1) {
-            s1.setText("Online");
+
+    public ServerStatus(boolean online, JLabel labelServer) {
+        this.online = online;
+        this.labelServer = labelServer;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+        if (online) {
+            this.labelServer.setText("Online");
+            this.labelServer.setForeground(Color.GREEN);
         } else {
-            s1.setText("Offine");
-        }
-        
-        if (server2) {
-            s2.setText("Online");
-        } else {
-            s2.setText("Offine");
+            this.labelServer.setText("Offline");
+            this.labelServer.setForeground(Color.RED);
         }
     }
 
-    public boolean isServer1() {
-        return server1;
+    public JLabel getLabelServer() {
+        return labelServer;
     }
 
-    public void setServer1(boolean server1) {
-        ServerStatus.server1 = server1;
-    }
-
-    public boolean isServer2() {
-        return server2;
-    }
-
-    public void setServer2(boolean server2) {
-        ServerStatus.server2 = server2;
+    public void setLabelServer(JLabel labelServer) {
+        this.labelServer = labelServer;
     }
     
 }

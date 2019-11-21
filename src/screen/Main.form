@@ -186,7 +186,7 @@
     <Component class="javax.swing.JLabel" name="server1Label">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="53" green="a6" red="28" type="rgb"/>
+          <Color blue="0" green="ff" id="green" palette="1" red="0" type="palette"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Online"/>
       </Properties>
@@ -194,9 +194,9 @@
     <Component class="javax.swing.JLabel" name="server2Label">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="19" green="19" red="dd" type="rgb"/>
+          <Color blue="0" green="ff" id="green" palette="1" red="0" type="palette"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Offline"/>
+        <Property name="text" type="java.lang.String" value="Online"/>
       </Properties>
     </Component>
   </SubComponents>

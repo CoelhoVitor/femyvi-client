@@ -25,6 +25,7 @@ import model.UserMessage;
 import utils.FileUtils;
 import utils.SessionUser;
 import utils.ImageRenderer;
+import utils.SessionServer;
 
 public class Main extends javax.swing.JFrame {
 
@@ -42,7 +43,8 @@ public class Main extends javax.swing.JFrame {
         UserMessage um = SessionUser.getInstance();
         System.out.println("Usuario logado: " + um.toString());
         
-        ServerStatus.handleLabel(server1Label, server2Label);
+        SessionServer.getInstance().getServer1().setLabelServer(server1Label);
+        SessionServer.getInstance().getServer2().setLabelServer(server2Label);
         
         setButtonIcons();
         setColumnIcons();
@@ -238,10 +240,10 @@ public class Main extends javax.swing.JFrame {
             }
         });
         jTextField1.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 jTextField1InputMethodTextChanged(evt);
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -286,11 +288,11 @@ public class Main extends javax.swing.JFrame {
 
         jLabel3.setText("Servidor 2:");
 
-        server1Label.setForeground(new java.awt.Color(40, 166, 83));
+        server1Label.setForeground(java.awt.Color.green);
         server1Label.setText("Online");
 
-        server2Label.setForeground(new java.awt.Color(221, 25, 25));
-        server2Label.setText("Offline");
+        server2Label.setForeground(java.awt.Color.green);
+        server2Label.setText("Online");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import utils.SessionUser;
 import model.ServerStatus;
+import utils.SessionServer;
 
 public class Login extends javax.swing.JFrame {
 
@@ -13,11 +14,14 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        
+        ServerStatus s1 = new ServerStatus(false, server1Label);
+        ServerStatus s2 = new ServerStatus(false, server2Label);
+        SessionServer.setInstance(s1, s2);
+        
         Login.this.setVisible(true);
         centralizeScreen();
         jLabel2.setVisible(false);
-        
-        ServerStatus.handleLabel(server1Label, server2Label);
     }
 
     private void centralizeScreen() {
@@ -75,12 +79,12 @@ public class Login extends javax.swing.JFrame {
 
         jLabel5.setText("Servidor 1:");
 
-        server1Label.setForeground(new java.awt.Color(40, 166, 83));
-        server1Label.setText("Online");
+        server1Label.setForeground(java.awt.Color.red);
+        server1Label.setText("Offline");
 
         jLabel6.setText("Servidor 2:");
 
-        server2Label.setForeground(new java.awt.Color(221, 25, 25));
+        server2Label.setForeground(java.awt.Color.red);
         server2Label.setText("Offline");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
