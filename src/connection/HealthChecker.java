@@ -1,17 +1,13 @@
 package connection;
 
-import com.sun.security.sasl.Provider;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.security.Security;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import screen.Main;
 
 public class HealthChecker extends Thread {
 
@@ -45,11 +41,7 @@ public class HealthChecker extends Thread {
                 // call updateServerStatus(serverIsUp) to update front
                 Thread.sleep(2000);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(HealthChecker.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(HealthChecker.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (IOException | InterruptedException | ClassNotFoundException ex) {
             Logger.getLogger(HealthChecker.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

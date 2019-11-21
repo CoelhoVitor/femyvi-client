@@ -55,9 +55,7 @@ public class FileFetch {
 
                 return fileMessages;
             }
-        } catch (IOException ex) {
-            Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(FileUpload.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ArrayList<FileMessage>();

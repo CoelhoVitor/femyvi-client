@@ -3,12 +3,15 @@ package screen;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.FileMessage;
 
 public class RepoProperties extends javax.swing.JFrame {
 
     /**
      * Creates new form RepoProperties
+     * @param fileMessageList
      */
     public RepoProperties(ArrayList<FileMessage> fileMessageList) {
         initComponents();
@@ -18,7 +21,12 @@ public class RepoProperties extends javax.swing.JFrame {
 
         centralizeScreen();
 
-        getInfos(fileMessageList);
+        try {
+            getInfos(fileMessageList);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Não há arquivos no repositório");
+            //Logger.getLogger(RepoProperties.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     private void centralizeScreen() {
@@ -86,14 +94,17 @@ public class RepoProperties extends javax.swing.JFrame {
             }
         }
         
-        this.numberLabel.setText(Integer.toString(numberOfFiles));
-        this.usedLabel.setText(Integer.toString(usedSize) + "B");
-        this.largestLabel.setText(largestFile + "." + extFile);
-        this.audioLabel.setText(Integer.toString(numberOfAudios));
-        this.photoLabel.setText(Integer.toString(numberOfPhotos));
-        this.textLabel.setText(Integer.toString(numberOfTexts));
-        this.videoLabel.setText(Integer.toString(numberOfVideos));
-        this.unrecognizedLabel.setText(Integer.toString(numberOfUnrecognized));
+        
+        if (numberOfFiles > 0) {
+            this.numberLabel.setText(Integer.toString(numberOfFiles));
+            this.usedLabel.setText(Integer.toString(usedSize) + "B");
+            this.largestLabel.setText(largestFile + "." + extFile);
+            this.audioLabel.setText(Integer.toString(numberOfAudios));
+            this.photoLabel.setText(Integer.toString(numberOfPhotos));
+            this.textLabel.setText(Integer.toString(numberOfTexts));
+            this.videoLabel.setText(Integer.toString(numberOfVideos));
+            this.unrecognizedLabel.setText(Integer.toString(numberOfUnrecognized));
+        }
         
     }
 
@@ -142,23 +153,23 @@ public class RepoProperties extends javax.swing.JFrame {
 
         jLabel7.setText("Quantidade de áudios:");
 
-        numberLabel.setText("jLabel8");
+        numberLabel.setText("0");
 
-        usedLabel.setText("jLabel9");
+        usedLabel.setText("0");
 
-        largestLabel.setText("jLabel10");
+        largestLabel.setText("Não há arquivos no repositório");
 
-        audioLabel.setText("jLabel11");
+        audioLabel.setText("0");
 
-        photoLabel.setText("jLabel12");
+        photoLabel.setText("0");
 
-        textLabel.setText("jLabel13");
+        textLabel.setText("0");
 
-        videoLabel.setText("jLabel14");
+        videoLabel.setText("0");
 
         jLabel8.setText("Extensões desconhecidas:");
 
-        unrecognizedLabel.setText("jLabel15");
+        unrecognizedLabel.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -199,7 +210,7 @@ public class RepoProperties extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(unrecognizedLabel)))
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
