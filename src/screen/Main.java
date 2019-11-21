@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -150,9 +151,16 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void onRemoveClick(FileMessage selectedFile, int row) throws IOException {
-        FileRemove fr = new FileRemove(Ports.REMOVE);
-        fr.run(selectedFile);
-        fileMessageList.remove(row);
+
+        int input = JOptionPane.showConfirmDialog(null, "Voce deseja realmente deletar este arquivo? Esta operação é irreversível!", "Deletar arquivo",
+                JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+
+        if (input == JOptionPane.YES_OPTION) {
+            FileRemove fr = new FileRemove(Ports.REMOVE);
+            fr.run(selectedFile);
+            fileMessageList.remove(row);
+        }
+
     }
 
     private void onDownloadClick(FileMessage selectedFile) throws IOException {
