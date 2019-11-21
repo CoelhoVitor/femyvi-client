@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import screen.Main;
+import model.ServerStatus;
 
 public class HealthChecker extends Thread {
 
@@ -35,14 +35,26 @@ public class HealthChecker extends Thread {
 
                 String msg = (String) objectInputStream.readObject();
 
-                boolean serverIsUp = msg.equals(UP_MESSAGE);
-                System.out.println(serverIsUp);
+                boolean isServerUp = msg.equals(UP_MESSAGE);
+                System.out.println(isServerUp);
 
-                // call updateServerStatus(serverIsUp) to update front
+                updateServerStatus(isServerUp);
                 Thread.sleep(2000);
             }
         } catch (IOException | InterruptedException | ClassNotFoundException ex) {
             Logger.getLogger(HealthChecker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void updateServerStatus(boolean isServerUp) {
+        ServerStatus ss = new ServerStatus();
+
+        if (port == Ports.HEALTHCHECK_1.getValue()) {
+            ss.setServer1(isServerUp);
+            System.out.println("server 1:" + isServerUp);
+        } else if (port == Ports.HEALTHCHECK_2.getValue()) {
+            ss.setServer2(isServerUp);
+            System.out.println("server 2:" + isServerUp);
         }
     }
 

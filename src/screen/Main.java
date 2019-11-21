@@ -20,17 +20,19 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import model.FileMessage;
+import model.ServerStatus;
 import model.UserMessage;
 import utils.FileUtils;
 import utils.SessionUser;
 import utils.ImageRenderer;
+import utils.SessionServer;
 
 public class Main extends javax.swing.JFrame {
 
     private final ArrayList<FileMessage> fileMessageList;
 
     /**
-     * Creates new form TelaPrincipal
+     * Creates new form Main
      */
     public Main() {
         initComponents();
@@ -39,7 +41,19 @@ public class Main extends javax.swing.JFrame {
 
         UserMessage um = SessionUser.getInstance();
         System.out.println("Usuario logado: " + um.toString());
-
+        
+        ServerStatus ss = SessionServer.getInstance();
+        if (ss.isServer1()) { 
+            server1Label.setText("Online"); 
+        } else {
+            server1Label.setText("Offline"); 
+        }
+        if (ss.isServer2()) { 
+            server2Label.setText("Online"); 
+        } else {
+            server2Label.setText("Offline"); 
+        }
+        
         setButtonIcons();
         setColumnIcons();
 

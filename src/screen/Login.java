@@ -119,7 +119,7 @@ public class Login extends javax.swing.JFrame {
 
         // aguardar o retorno e ai sim abrir o main screen
         if (isValidUser) {
-            SessionUser.setInstance(login, password);
+            SessionUser.setInstance(login, password);            
             new Main();
             Login.this.setVisible(false);
         } else {
