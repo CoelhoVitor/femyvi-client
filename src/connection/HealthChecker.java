@@ -3,11 +3,8 @@ package connection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
-import model.ServerStatus;
 import utils.SessionServer;
 
 public class HealthChecker extends Thread {
